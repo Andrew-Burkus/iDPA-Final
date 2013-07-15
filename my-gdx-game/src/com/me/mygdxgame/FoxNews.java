@@ -7,13 +7,14 @@ public class FoxNews {
 	
 	float x;
 	float y;
-	
-	Texture image;
+	int health;
+	public Texture image;
 	
 	public FoxNews()
 	{
 		x=300;
 		y=20;
+		health = 1000;
 		Foximage();
 	}
 

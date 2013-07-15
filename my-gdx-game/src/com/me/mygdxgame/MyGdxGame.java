@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class MyGdxGame implements ApplicationListener 
 {
@@ -17,13 +21,18 @@ public class MyGdxGame implements ApplicationListener
 	private SpriteBatch batch;
 	private Character ted;
 	private double deltaTime;
+	Liberals liberal;
+	Array<Rectangle> liberals;
 	FoxNews Fox;
+	long lastspawntime;
+	
 	@Override
 	public void create() 
 	{		
 		batch = new SpriteBatch();
 		ted = new Character();
 		Fox = new FoxNews();
+		liberal = new Liberals();
 	}
 
 	@Override
@@ -56,7 +65,29 @@ public class MyGdxGame implements ApplicationListener
 		{
 			ted.move_right();
 		}
+		
+		public boolean collision()
+		{
+			
+			
+			if(ted.getY() == liberal.y)
+			{
+				
+			}
+			else if(ted.getX() == liberal.x)
+			{
+				
+			}
+		}
+		
 	}
+	 /*private void spawnLiberals() 
+	  {
+	      Rectangle liberals = new Rectangle();
+	      liberals.x = MathUtils.random(0, 800-64);
+	      liberals.y = 480;
+	      lastspawntime = TimeUtils.nanoTime();
+	   }*/
 	
 	@Override
 	public void render() 
@@ -70,6 +101,7 @@ public class MyGdxGame implements ApplicationListener
 		batch.begin();
 			batch.draw(ted.image, ted.x, ted.y);
 			batch.draw(Fox.image, Fox.x, Fox.y);
+			batch.draw(liberal.image, liberal.x, liberal.y);
 		batch.end();
 	}
 

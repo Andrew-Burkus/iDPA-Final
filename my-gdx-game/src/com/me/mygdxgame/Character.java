@@ -8,6 +8,7 @@ public class Character extends MyGdxGame
 {
 	float x;
 	float y;
+	int score;
 	public Texture image;
 	
 	public Character()
@@ -39,6 +40,10 @@ public class Character extends MyGdxGame
 		getX();
 		setX(x);
 		x=x+5;
+	}
+	public void eat()
+	{
+		score++;
 	}
 	
 	public float getX() {
