@@ -1,5 +1,8 @@
 package com.me.mygdxgame;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -28,6 +31,8 @@ public class MyGdxGame implements ApplicationListener
 	long lastspawntime;
 	private RectangleEx Bill;
 	private RectangleEx Enemy;
+	private ArrayList <Liberals> DirtyDemocrats = new ArrayList<Liberals> ();
+	Random rand = new Random();
 	@Override
 	
 	public void create() 
@@ -38,24 +43,42 @@ public class MyGdxGame implements ApplicationListener
 		liberal = new Liberals();
 		Bill = new RectangleEx();
 		Enemy =  new RectangleEx();
+		for(int i = 0; i<10; i++)
+		{
+			Liberals l = new Liberals ();
+			l.x = rand.nextInt(1000);
+			l.y = rand.nextInt(800);
+			DirtyDemocrats.add(l);
+		}
+		
 	}
 	
-	public boolean collision()
+	public boolean recCollision(RectangleEx a, RectangleEx b)//collision detection
 	{
-		boolean x = false;
-		if(Enemy.getMaxX() > Bill.x || Enemy.x < Bill.getMaxX() ||Enemy.getMaxY() > Bill.x || Enemy.y < Bill.getMaxY())
-		{
-			x = true;
-		}
-		return x;
+		return 
+		a.getMaxX() > b.x && 
+		a.x < b.getMaxX() &&
+		a.getMaxY() > b.y && 
+		a.y < b.getMaxY();
 	}
+	
+	public void moveEnemies ()
+	{
+		DirtyDemocrats
+		
+	}
+	
 	
 	public void drawrects()
 	{
-		Enemy.x = liberal.x;
-		Enemy.y = liberal.y;
-		Bill.x = ted.x;
-		Bill.y = ted.y;
+		Enemy.x = liberal.getX();
+		Enemy.y = liberal.getY();
+		Bill.x = ted.getX();
+		Bill.y = ted.getY();
+		Enemy.width = liberal.image.getWidth();
+		Enemy.height = liberal.image.getHeight();
+		Bill.width = ted.image.getWidth();
+		Bill.height = ted.image.getHeight();
 	}
 
 	@Override
@@ -112,8 +135,14 @@ public class MyGdxGame implements ApplicationListener
 			
 			batch.draw(Fox.image, Fox.x, Fox.y);
 			
-			if(collision() == false)
+			if(recCollision(Enemy, Bill)== false)
 			{
+				batch.draw(liberal.image, liberal.x, liberal.y);
+			}
+			
+			for(int i = 0; i<DirtyDemocrats.size(); i++)
+			{
+				Liberals liberal = DirtyDemocrats.get(i);
 				batch.draw(liberal.image, liberal.x, liberal.y);
 			}
 			
