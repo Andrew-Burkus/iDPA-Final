@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class RectangleEx extends Rectangle 
 {
+
 	public float getMaxX()
 	{
 		return this.x + this.width;
@@ -13,6 +14,5 @@ public class RectangleEx extends Rectangle
 	{
 		return this.y + this.height;
 	}
-
 
 }

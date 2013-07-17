@@ -26,8 +26,8 @@ public class MyGdxGame implements ApplicationListener
 	private Liberals liberal;
 	private FoxNews Fox;
 	long lastspawntime;
-	private Rectangle Bill;
-	private RectangleEx Liberal;
+	private RectangleEx Bill;
+	private RectangleEx Enemy;
 	@Override
 	
 	public void create() 
@@ -36,10 +36,26 @@ public class MyGdxGame implements ApplicationListener
 		ted = new Character();
 		Fox = new FoxNews();
 		liberal = new Liberals();
-		Bill = new Rectangle(ted.x,ted.y, 275, 183);
-		Liberal=  new RectangleEx(liberal.getX(), liberal.getY(), 86, 64);
-		
-		Liberal.get
+		Bill = new RectangleEx();
+		Enemy =  new RectangleEx();
+	}
+	
+	public boolean collision()
+	{
+		boolean x = false;
+		if(Enemy.getMaxX() > Bill.x || Enemy.x < Bill.getMaxX() ||Enemy.getMaxY() > Bill.x || Enemy.y < Bill.getMaxY())
+		{
+			x = true;
+		}
+		return x;
+	}
+	
+	public void drawrects()
+	{
+		Enemy.x = liberal.x;
+		Enemy.y = liberal.y;
+		Bill.x = ted.x;
+		Bill.y = ted.y;
 	}
 
 	@Override
@@ -72,7 +88,7 @@ public class MyGdxGame implements ApplicationListener
 		{
 			ted.move_right();
 		}
-	
+		drawrects();
 	}
 	 /*private void spawnLiberals() 
 	  {
@@ -86,15 +102,21 @@ public class MyGdxGame implements ApplicationListener
 	public void render() 
 	{		
 		update();
-		
 		//do draw stuff here
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
+		
 			batch.draw(ted.image, ted.x, ted.y);
+			
 			batch.draw(Fox.image, Fox.x, Fox.y);
-			batch.draw(liberal.image, liberal.x, liberal.y);
+			
+			if(collision() == false)
+			{
+				batch.draw(liberal.image, liberal.x, liberal.y);
+			}
+			
 		batch.end();
 	}
 	
