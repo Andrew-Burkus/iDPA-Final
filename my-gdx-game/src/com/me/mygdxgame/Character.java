@@ -13,8 +13,8 @@ public class Character extends MyGdxGame
 	
 	public Character()
 	{
-		x=100;
-		y=100;
+		x=380;
+		y=280;
 		characterimage();
 	}
 	public void move_left ()
@@ -60,7 +60,7 @@ public class Character extends MyGdxGame
 	}
 	public void characterimage()
 	{
-		image = new Texture(Gdx.files.internal("data/alg_host_bill-oreilly1.jpg"));
+		image = new Texture(Gdx.files.internal("data/Bill head.jpg"));
 	}
 		
 }

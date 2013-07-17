@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -21,18 +23,23 @@ public class MyGdxGame implements ApplicationListener
 	private SpriteBatch batch;
 	private Character ted;
 	private double deltaTime;
-	Liberals liberal;
-	Array<Rectangle> liberals;
-	FoxNews Fox;
+	private Liberals liberal;
+	private FoxNews Fox;
 	long lastspawntime;
-	
+	private Rectangle Bill;
+	private RectangleEx Liberal;
 	@Override
+	
 	public void create() 
 	{		
 		batch = new SpriteBatch();
 		ted = new Character();
 		Fox = new FoxNews();
 		liberal = new Liberals();
+		Bill = new Rectangle(ted.x,ted.y, 275, 183);
+		Liberal=  new RectangleEx(liberal.getX(), liberal.getY(), 86, 64);
+		
+		Liberal.get
 	}
 
 	@Override
@@ -40,7 +47,7 @@ public class MyGdxGame implements ApplicationListener
 	{
 		batch.dispose();
 	}
-
+	
 	public void update()
 	{
 		deltaTime = Gdx.graphics.getDeltaTime();//time between frames
@@ -65,21 +72,7 @@ public class MyGdxGame implements ApplicationListener
 		{
 			ted.move_right();
 		}
-		
-		public boolean collision()
-		{
-			
-			
-			if(ted.getY() == liberal.y)
-			{
-				
-			}
-			else if(ted.getX() == liberal.x)
-			{
-				
-			}
-		}
-		
+	
 	}
 	 /*private void spawnLiberals() 
 	  {
@@ -104,7 +97,10 @@ public class MyGdxGame implements ApplicationListener
 			batch.draw(liberal.image, liberal.x, liberal.y);
 		batch.end();
 	}
-
+	
+	
+	
+	
 	@Override
 	public void resize(int width, int height) 
 	{
