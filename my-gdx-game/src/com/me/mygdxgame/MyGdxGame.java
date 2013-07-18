@@ -32,6 +32,8 @@ public class MyGdxGame implements ApplicationListener
 	private RectangleEx Enemy;// way better
 	private ArrayList <Liberals> DirtyDemocrats = new ArrayList<Liberals> (); // good comments
 	Random rand = new Random();
+	private boolean success = false;
+	ArrayList <America> victory_image = new ArrayList <America> ();
 	@Override
 	
 	public void create() 
@@ -44,13 +46,26 @@ public class MyGdxGame implements ApplicationListener
 		for(int i = 0; i<100; i++)
 		{
 			Liberals l = new Liberals ();
-			int x = rand.nextInt(1000);
+			int x = rand.nextInt(800);
 			int y = rand.nextInt(800);
 			l.setPosition(new Vector2(x,y));
 			DirtyDemocrats.add(l);
 		}
 		
+		for (int i = 0; i<3; i++)
+		{
+				America a = new America();
+				victory_image.add(a);
+		}
 		
+	}
+	public void moreAmerica()
+	{
+		for (int i = 0; i<3; i++)
+		{
+				America a = new America();
+				victory_image.add(a);
+		}
 	}
 	
 	public boolean recCollision(RectangleEx a, RectangleEx b)//collision detection
@@ -112,6 +127,14 @@ public class MyGdxGame implements ApplicationListener
 			}
 		}
 		
+		if(DirtyDemocrats.size() == 0)
+		{
+			success = true;
+		}
+		if(success == true)
+		{
+			moreAmerica();
+		}
 		
 	}
 	
@@ -126,10 +149,20 @@ public class MyGdxGame implements ApplicationListener
 		
 		batch.begin();
 		
+			if (success == true)
+			{
+				America a = new America();
+				for(int i = 0; i<3;i++)
+				{
+					batch.draw(a.image, a.position.x, a.position.y);
+				}
+				
+			}
+				
+		
 			batch.draw(bill.image, bill.position.x, bill.position.y);
 			
 			batch.draw(Fox.image, Fox.x, Fox.y);
-			
 			
 
 			for(int i = 0; i<DirtyDemocrats.size(); i++)
@@ -138,6 +171,8 @@ public class MyGdxGame implements ApplicationListener
 				Liberals liberal = DirtyDemocrats.get(i);
 				batch.draw(liberal.image, l.position.x, l.position.y);
 			}
+			
+			
 			
 		batch.end();
 	}
