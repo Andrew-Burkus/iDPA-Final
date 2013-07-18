@@ -2,6 +2,7 @@ package com.me.mygdxgame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 
 public class FoxNews {
 	
@@ -9,6 +10,7 @@ public class FoxNews {
 	float y;
 	int health;
 	public Texture image;
+	RectangleEx FoxRect;
 	
 	public FoxNews()
 	{
@@ -16,6 +18,7 @@ public class FoxNews {
 		y=20;
 		health = 1000;
 		Foximage();
+		FoxRect = new RectangleEx();
 	}
 
 

@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -24,61 +25,43 @@ public class MyGdxGame implements ApplicationListener
 {
 
 	private SpriteBatch batch;
-	private Character ted;
-	private double deltaTime;
-	private Liberals liberal;
+	private Character bill;
+	public float deltaTime;
 	private FoxNews Fox;
-	long lastspawntime;
-	private RectangleEx Bill;
-	private RectangleEx Enemy;
-	private ArrayList <Liberals> DirtyDemocrats = new ArrayList<Liberals> ();
+	private Liberals liberal;
+	private RectangleEx Enemy;// way better
+	private ArrayList <Liberals> DirtyDemocrats = new ArrayList<Liberals> (); // good comments
 	Random rand = new Random();
 	@Override
 	
 	public void create() 
-	{		
+	{
 		batch = new SpriteBatch();
-		ted = new Character();
+		bill = new Character();
 		Fox = new FoxNews();
 		liberal = new Liberals();
-		Bill = new RectangleEx();
 		Enemy =  new RectangleEx();
-		for(int i = 0; i<10; i++)
+		for(int i = 0; i<1; i++)
 		{
 			Liberals l = new Liberals ();
-			l.x = rand.nextInt(1000);
-			l.y = rand.nextInt(800);
+			int x = rand.nextInt(200);
+			int y = rand.nextInt(800);
+			l.setPosition(new Vector2(x,y));
 			DirtyDemocrats.add(l);
 		}
+		
 		
 	}
 	
 	public boolean recCollision(RectangleEx a, RectangleEx b)//collision detection
 	{
-		return 
-		a.getMaxX() > b.x && 
-		a.x < b.getMaxX() &&
-		a.getMaxY() > b.y && 
-		a.y < b.getMaxY();
-	}
-	
-	public void moveEnemies ()
-	{
-		DirtyDemocrats
 		
-	}
-	
-	
-	public void drawrects()
-	{
-		Enemy.x = liberal.getX();
-		Enemy.y = liberal.getY();
-		Bill.x = ted.getX();
-		Bill.y = ted.getY();
-		Enemy.width = liberal.image.getWidth();
-		Enemy.height = liberal.image.getHeight();
-		Bill.width = ted.image.getWidth();
-		Bill.height = ted.image.getHeight();
+		boolean b1 = a.getMaxX() > b.x;
+		boolean b2 = a.x < b.getMaxX();
+		boolean b3 = a.getMaxY() > b.y;
+		boolean b4 = a.y < b.getMaxY();
+		
+		return b1 && b2 && b3 && b4;
 	}
 
 	@Override
@@ -89,29 +72,48 @@ public class MyGdxGame implements ApplicationListener
 	
 	public void update()
 	{
-		deltaTime = Gdx.graphics.getDeltaTime();//time between frames
+		deltaTime = Gdx.graphics.getDeltaTime();
+		
+		/////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		Vector2 dir = new Vector2(0,0);
 		//do game logic here
-		boolean isAPressed = Gdx.input.isKeyPressed(Keys.A);
-		if(isAPressed==true)
+		if(Gdx.input.isKeyPressed(Keys.A))
 		{
-			ted.move_left();
+			dir.add(-1, 0);
 		}
 		boolean isWPressed = Gdx.input.isKeyPressed(Keys.W);
 		if(isWPressed==true)
 		{
-			ted.move_up();
+			dir.add(0, 1);
 		}
 		boolean isSPressed = Gdx.input.isKeyPressed(Keys.S);
 		if(isSPressed==true)
 		{
-			ted.move_down();
+			dir.add(0, -1);
 		}
 		boolean isDPressed = Gdx.input.isKeyPressed(Keys.D);
 		if(isDPressed==true)
 		{
-			ted.move_right();
+			dir.add(1, 0);
 		}
-		drawrects();
+		
+		Vector2 tedV = dir.nor().mul(bill.speed);
+		Vector2 finalPos = bill.position.cpy().add(tedV.mul(deltaTime));
+		bill.setPosition(finalPos);
+		
+		
+		for(int i = 0; i<DirtyDemocrats.size(); i++)
+		{
+			Liberals l = DirtyDemocrats.get(i);
+			if(recCollision(l.rect, bill.rect))
+			{
+				DirtyDemocrats.remove(i);
+				i--;
+			}
+		}
+		
+		///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		//while(recCollision())	
 	}
 	 /*private void spawnLiberals() 
 	  {
@@ -125,25 +127,22 @@ public class MyGdxGame implements ApplicationListener
 	public void render() 
 	{		
 		update();
-		//do draw stuff here
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
 		
-			batch.draw(ted.image, ted.x, ted.y);
+			batch.draw(bill.image, bill.position.x, bill.position.y);
 			
 			batch.draw(Fox.image, Fox.x, Fox.y);
 			
-			if(recCollision(Enemy, Bill)== false)
-			{
-				batch.draw(liberal.image, liberal.x, liberal.y);
-			}
 			
+
 			for(int i = 0; i<DirtyDemocrats.size(); i++)
 			{
+				Liberals l = DirtyDemocrats.get(i);
 				Liberals liberal = DirtyDemocrats.get(i);
-				batch.draw(liberal.image, liberal.x, liberal.y);
+				batch.draw(liberal.image, l.position.x, l.position.y);
 			}
 			
 		batch.end();

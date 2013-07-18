@@ -1,63 +1,49 @@
 package com.me.mygdxgame;
 
+import java.util.Vector;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class Character extends MyGdxGame 
 {
-	float x;
-	float y;
 	int score;
 	public Texture image;
-	
+	int speed;
+	float dTime;
+	Vector2 position = new Vector2 (100,100);
+	RectangleEx rect = new RectangleEx();
 	public Character()
 	{
-		x=380;
-		y=280;
+		speed = 500;
+		dTime = Gdx.graphics.getDeltaTime();
 		characterimage();
+		updateRectPos();
+		rect.width = 108;
+		rect.height = 156;
 	}
-	public void move_left ()
-	{
-		 getX(); 
-		 setX(x);
-		 x=x-5;
-	}
-	public void move_up()
-	{
-		 getY();
-		 setY(y);
-		 y=y+5;
-	}
-	public void move_down()
-	{
-		getY();
-		setY(y);
-		y=y-5;
-	}
-	public void move_right()
-	{
-		getX();
-		setX(x);
-		x=x+5;
-	}
+
 	public void eat()
 	{
 		score++;
 	}
 	
-	public float getX() {
-		return x;
+	public void updateRectPos()
+	{
+		rect.x = position.x;
+		rect.y = position.y;
 	}
-	public void setX(float x) {
-		this.x = x;
+	
+	public void setPosition(Vector2 v)
+	{
+		this.position.x = v.x;
+		this.position.y = v.y;
+		updateRectPos();
 	}
-	public float getY() {
-		return y;
-	}
-	public void setY(float y) {
-		this.y = y;
-	}
+	
 	public void characterimage()
 	{
 		image = new Texture(Gdx.files.internal("data/Bill head.jpg"));
