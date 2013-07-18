@@ -41,10 +41,10 @@ public class MyGdxGame implements ApplicationListener
 		Fox = new FoxNews();
 		liberal = new Liberals();
 		Enemy =  new RectangleEx();
-		for(int i = 0; i<1; i++)
+		for(int i = 0; i<100; i++)
 		{
 			Liberals l = new Liberals ();
-			int x = rand.nextInt(200);
+			int x = rand.nextInt(1000);
 			int y = rand.nextInt(800);
 			l.setPosition(new Vector2(x,y));
 			DirtyDemocrats.add(l);
@@ -112,16 +112,10 @@ public class MyGdxGame implements ApplicationListener
 			}
 		}
 		
-		///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-		//while(recCollision())	
+		
 	}
-	 /*private void spawnLiberals() 
-	  {
-	      Rectangle liberals = new Rectangle();
-	      liberals.x = MathUtils.random(0, 800-64);
-	      liberals.y = 480;
-	      lastspawntime = TimeUtils.nanoTime();
-	   }*/
+	
+///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	
 	@Override
 	public void render() 

@@ -14,7 +14,7 @@ public class Character extends MyGdxGame
 	public Texture image;
 	int speed;
 	float dTime;
-	Vector2 position = new Vector2 (100,100);
+	Vector2 position = new Vector2 (305.24252f,228.5503f);
 	RectangleEx rect = new RectangleEx();
 	public Character()
 	{
@@ -22,8 +22,8 @@ public class Character extends MyGdxGame
 		dTime = Gdx.graphics.getDeltaTime();
 		characterimage();
 		updateRectPos();
-		rect.width = 108;
-		rect.height = 156;
+		rect.width = 86;
+		rect.height = 64;
 	}
 
 	public void eat()
