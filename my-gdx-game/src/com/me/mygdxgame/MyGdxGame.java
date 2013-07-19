@@ -61,11 +61,8 @@ public class MyGdxGame implements ApplicationListener
 	}
 	public void moreAmerica()
 	{
-		for (int i = 0; i<3; i++)
-		{
-				America a = new America();
-				victory_image.add(a);
-		}
+		America a = new America();
+		victory_image.add(a);
 	}
 	
 	public boolean recCollision(RectangleEx a, RectangleEx b)//collision detection
@@ -131,7 +128,7 @@ public class MyGdxGame implements ApplicationListener
 		{
 			success = true;
 		}
-		if(success == true)
+		if(success)
 		{
 			moreAmerica();
 		}
@@ -149,28 +146,27 @@ public class MyGdxGame implements ApplicationListener
 		
 		batch.begin();
 		
-			if (success == true)
+		if (success)
+		{
+			for(int i = 0; i < victory_image.size(); i++)
 			{
-				America a = new America();
-				for(int i = 0; i<3;i++)
-				{
-					batch.draw(a.image, a.position.x, a.position.y);
-				}
-				
+				America a = victory_image.get(i);
+				batch.draw(a.image, a.position.x, a.position.y);
 			}
-				
+		}
+			
+	
+		batch.draw(bill.image, bill.position.x, bill.position.y);
 		
-			batch.draw(bill.image, bill.position.x, bill.position.y);
-			
-			batch.draw(Fox.image, Fox.x, Fox.y);
-			
+		batch.draw(Fox.image, Fox.x, Fox.y);
+		
 
-			for(int i = 0; i<DirtyDemocrats.size(); i++)
-			{
-				Liberals l = DirtyDemocrats.get(i);
-				Liberals liberal = DirtyDemocrats.get(i);
-				batch.draw(liberal.image, l.position.x, l.position.y);
-			}
+		for(int i = 0; i<DirtyDemocrats.size(); i++)
+		{
+			Liberals l = DirtyDemocrats.get(i);
+			Liberals liberal = DirtyDemocrats.get(i);
+			batch.draw(liberal.image, l.position.x, l.position.y);
+		}
 			
 			
 			
